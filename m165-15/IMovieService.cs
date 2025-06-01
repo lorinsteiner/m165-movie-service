@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Linq.Expressions;
 
 interface IMovieService
@@ -12,13 +13,15 @@ interface IMovieService
 
     List<Movie> GetMovies(Expression<Func<Movie, bool>> filter);
 
-    Movie InsertMovie(Movie movie);
+    void InsertMovie(Movie movie);
 
-    List<Movie> InsertMovies(List<Movie> movies);
+    void InsertMovies(List<Movie> movies);
 
-    List<Movie> UpdateMovies(Expression<Func<Movie, bool>> filter, Movie movie);
+    long UpdateMovies<V>(Expression<Func<Movie, bool>> filter, string field, V newValue);
 
-    List<Movie> DeleteMovies(Expression<Func<Movie, bool>> filter);
+    long DeleteMovies(Expression<Func<Movie, bool>> filter);
 
-    Dictionary<TKey, List<Movie>> GroupMovies(Expression<Func<Movie, TKey>> mapping);
+    //ImmutableSortedDictionary<int?, int> GetNumberOfMoviesPerYear(Expression<Func<Movie, bool>> filter);
+
+    String GetMoviesAsJson();
 }

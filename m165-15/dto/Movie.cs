@@ -1,29 +1,21 @@
-using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-class Movie(ObjectId id, string title, int year, string summary, List<string> actors)
+class Movie(string title, int year, string summary, List<string> actors)
 {
 
-    [BsonElement("_id")]
-    [JsonPropertyName("_id")]
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public ObjectId? Id { get; set; } = id;
+    [BsonElement("_id")]
+    public ObjectId Id { get; set; }
+    [BsonElement("title")]
     public string Title { get; set; } = title;
-    public int Year { get; set; } = year;
+    [BsonElement("year")]
+    [BsonIgnoreIfNull]
+    public int? Year { get; set; } = year;
+    [BsonElement("summary")]
     public string Summary { get; set; } = summary;
+    [BsonElement("actors")]
     public List<string> Actors { get; set; } = actors;
-
-    public static Movie New(string title, int year, string summary, List<string> actors)
-    {
-        return new Movie(
-            ObjectId.Empty,
-            title,
-            year,
-            summary,
-            actors
-        );
-    }
 
 }
