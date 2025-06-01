@@ -37,6 +37,16 @@ class MovieService : IMovieService
         return _client.ListDatabaseNames().ToList();
     }
 
+    public Movie? GetMovieEquals<V>(Expression<Func<Movie, V>> field, V value)
+    {
+        return _movies.Find(Builders<Movie>.Filter.Eq(field, value)).FirstOrDefault();
+    }
+
+    public List<Movie> GetMoviesContainActor(string[] actor)
+    {
+        return _movies.Find(Builders<Movie>.Filter.AnyIn(movie => movie.Actors, actor)).ToList();
+    }
+
     public Movie? GetMovie(Expression<Func<Movie, bool>> filter)
     {
         return _movies.Find(filter).ToList().FirstOrDefault();
@@ -50,6 +60,12 @@ class MovieService : IMovieService
     public List<Movie> GetMovies(Expression<Func<Movie, bool>> filter)
     {
         return _movies.Find(filter).ToList();
+    }
+
+    public List<Movie> GetMoviesEquals<V>(Expression<Func<Movie, V>> field, V value)
+    {
+        return _movies.Find(Builders<Movie>.Filter.Eq(field, value))
+        .ToList();
     }
 
     public string GetMoviesAsJson()

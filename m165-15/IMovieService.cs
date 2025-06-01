@@ -9,8 +9,11 @@ interface IMovieService
 
     List<Movie> GetMovies();
 
+    Movie? GetMovieEquals<V>(Expression<Func<Movie, V>> field, V value);
     Movie? GetMovie(Expression<Func<Movie, bool>> filter);
 
+    List<Movie> GetMoviesEquals<V>(Expression<Func<Movie, V>> field, V value);
+    List<Movie> GetMoviesContainActor(string[] actor);
     List<Movie> GetMovies(Expression<Func<Movie, bool>> filter);
 
     void InsertMovie(Movie movie);
